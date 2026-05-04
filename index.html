@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open Claw 🦀 — Solana Whale Signal Bot</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --claw: #00ff88;
+    --claw2: #00d4ff;
+    --bg: #050a0e;
+    --card: #0a1520;
+    --border: #0d2035;
+    --text: #e0f0ff;
+    --muted: #4a7090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(0,255,136,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.04) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    color: var(--claw);
+    text-shadow: 0 0 20px rgba(0,255,136,0.5);
+    letter-spacing: 2px;
+  }
+  .nav-pill {
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    color: var(--claw);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-pill:hover {
+    background: rgba(0,255,136,0.15);
+    box-shadow: 0 0 20px rgba(0,255,136,0.2);
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 80px 0 60px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    color: var(--claw);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+  .dot-live {
+    width: 7px; height: 7px;
+    background: var(--claw);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+    box-shadow: 0 0 8px var(--claw);
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+  h1 span {
+    background: linear-gradient(135deg, var(--claw), var(--claw2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: #7a9ab5;
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-group {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--claw), #00c46a);
+    color: #000;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 30px rgba(0,255,136,0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 50px rgba(0,255,136,0.4);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 16px 36px;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--claw); color: var(--claw); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 60px 0;
+  }
+  .stat {
+    background: var(--card);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--claw);
+    text-shadow: 0 0 20px rgba(0,255,136,0.3);
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* TRADE REPLAY */
+  .section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 32px; }
+
+  .replay-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+  .replay-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .replay-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+  }
+  .tab {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .tab.active {
+    background: rgba(0,255,136,0.1);
+    border-color: rgba(0,255,136,0.3);
+    color: var(--claw);
+  }
+
+  .trades-list { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+
+  .trade-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .trade-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+  .trade-card.win::before { background: var(--claw); }
+  .trade-card.loss::before { background: #ff4466; }
+  .trade-card:hover { border-color: rgba(0,255,136,0.2); background: rgba(0,255,136,0.03); }
+
+  .trade-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Space Mono', monospace;
+  }
+  .trade-icon.win { background: rgba(0,255,136,0.1); color: var(--claw); }
+  .trade-icon.loss { background: rgba(255,68,102,0.1); color: #ff4466; }
+
+  .trade-info .symbol { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; }
+  .trade-info .meta { font-size: 0.78rem; color: var(--muted); }
+
+  .trade-signals { text-align: right; }
+  .signal-tag {
+    display: inline-block;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.15);
+    color: var(--claw2);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .trade-signals .meta { font-size: 0.75rem; color: var(--muted); }
+
+  .trade-pnl {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: right;
+    min-width: 80px;
+  }
+  .trade-pnl.win { color: var(--claw); text-shadow: 0 0 15px rgba(0,255,136,0.3); }
+  .trade-pnl.loss { color: #ff4466; }
+
+  /* SPIRIT2.0 HIGHLIGHT */
+  .spirit-banner {
+    background: linear-gradient(135deg, rgba(0,255,136,0.06), rgba(0,212,255,0.06));
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .spirit-banner::before {
+    content: '500x';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 6rem;
+    font-weight: 700;
+    color: rgba(0,255,136,0.04);
+    pointer-events: none;
+  }
+  .spirit-grid { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .spirit-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .spirit-val { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--claw); }
+  .spirit-badge {
+    background: var(--claw);
+    color: #000;
+    font-weight: 700;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* HOW IT WORKS */
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 60px; }
+  .how-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+  }
+  .how-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .how-icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .how-title { font-weight: 700; margin-bottom: 8px; }
+  .how-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* PRICING */
+  .pricing-card {
+    background: var(--card);
+    border: 1px solid rgba(0,255,136,0.25);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    max-width: 420px;
+    margin: 0 auto 60px;
+    box-shadow: 0 0 60px rgba(0,255,136,0.06);
+  }
+  .price-amount {
+    font-family: 'Space Mono', monospace;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--claw);
+    margin-bottom: 4px;
+  }
+  .price-period { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+  .price-features { list-style: none; margin-bottom: 32px; text-align: left; }
+  .price-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #a0c0d8;
+  }
+  .price-features li::before { content: '✓'; color: var(--claw); font-weight: 700; }
+
+  /* WHALE FEED PREVIEW */
+  .feed-preview {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 60px;
+  }
+  .feed-header {
+    background: #0d1e2d;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .feed-dot { width: 10px; height: 10px; background: var(--claw); border-radius: 50%; animation: pulse 2s infinite; }
+  .feed-title { font-size: 0.85rem; font-family: 'Space Mono', monospace; color: var(--claw); }
+  .feed-items { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .feed-item {
+    background: rgba(0,255,136,0.03);
+    border: 1px solid rgba(0,255,136,0.08);
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideIn 0.4s ease forwards;
+    opacity: 0;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .feed-item:nth-child(1) { animation-delay: 0.1s; }
+  .feed-item:nth-child(2) { animation-delay: 0.3s; }
+  .feed-item:nth-child(3) { animation-delay: 0.5s; }
+  .feed-item:nth-child(4) { animation-delay: 0.7s; }
+
+  .feed-symbol { font-weight: 700; font-size: 0.95rem; }
+  .feed-whales { font-size: 0.78rem; color: var(--muted); }
+  .feed-right { text-align: right; }
+  .feed-change { font-family: 'Space Mono', monospace; color: var(--claw); font-weight: 700; font-size: 0.9rem; }
+  .feed-mcap { font-size: 0.75rem; color: var(--muted); }
+  .feed-blur {
+    filter: blur(5px);
+    user-select: none;
+    pointer-events: none;
+  }
+  .feed-blur-overlay {
+    position: relative;
+  }
+  .feed-blur-overlay::after {
+    content: '🔒 Subscribe to unlock';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--claw);
+    font-weight: 600;
+    background: rgba(5,10,14,0.7);
+    border-radius: 12px;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .stats-bar { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
+    .trade-card { grid-template-columns: auto 1fr auto; }
+    .trade-signals { display: none; }
+    .spirit-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- NAV -->
+  <nav>
+    <div class="logo">OPEN CLAW 🦀</div>
+    <a href="https://t.me/ficlawcryptobot" target="_blank" class="nav-pill">Get Access →</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">
+      <div class="dot-live"></div>
+      Live Signal Bot · 415 Wallets Tracked
+    </div>
+    <h1>The bot that caught<br><span>SPIRIT2.0</span> before<br>the 500x</h1>
+    <p class="hero-sub">We monitor 415 proven Solana whale wallets in real time. When 3+ whales stack the same token — you get the alert before the pump.</p>
+    <div class="cta-group">
+      <a href="https://t.me/ficlawcryptobot" target="_blank" class="btn-primary">
+        🦀 Get Whale Signals — 0.1 SOL/mo
+      </a>
+      <a href="#trades" class="btn-secondary">See the trades ↓</a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num">415</div>
+      <div class="stat-label">Whale Wallets Tracked</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">500x</div>
+      <div class="stat-label">Best Signal (SPIRIT2.0)</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5min</div>
+      <div class="stat-label">Scan Interval</div>
+    </div>
+  </div>
+
+  <!-- SPIRIT2.0 HIGHLIGHT -->
+  <div class="spirit-banner">
+    <div class="section-title">The trade that started it all</div>
+    <div class="section-sub" style="margin-bottom: 20px;">Bot entered SPIRIT2.0 at $50k mcap. Confirmed on-chain.</div>
+    <div class="spirit-grid">
+      <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;">
+        <div>
+          <div class="spirit-label">Entry MCap</div>
+          <div class="spirit-val">$50k</div>
+        </div>
+        <div>
+          <div class="spirit-label">1h Signal</div>
+          <div class="spirit-val">+80%</div>
+        </div>
+        <div>
+          <div class="spirit-label">Peak Gain</div>
+          <div class="spirit-val">+500x</div>
+        </div>
+      </div>
+      <div class="spirit-badge">500x 🚀</div>
+    </div>
+  </div>
+
+  <!-- TRADE REPLAY -->
+  <div id="trades">
+    <div class="section-title">Live trade log</div>
+    <div class="section-sub">Real trades executed on-chain. No simulations.</div>
+  </div>
+
+  <div class="replay-container">
+    <div class="replay-header">
+      <div class="replay-title">// TRADE_HISTORY.LOG</div>
+      <div class="filter-tabs">
+        <button class="tab active" onclick="filterTrades('all')">All</button>
+        <button class="tab" onclick="filterTrades('win')">Winners</button>
+        <button class="tab" onclick="filterTrades('loss')">Losers</button>
+      </div>
+    </div>
+    <div class="trades-list" id="tradesList"></div>
+  </div>
+
+  <!-- WHALE FEED PREVIEW -->
+  <div class="section-title">Live whale feed — preview</div>
+  <div class="section-sub" style="margin-bottom: 24px;">Right now, whales are moving into these tokens. Subscribers get this in real time.</div>
+
+  <div class="feed-preview">
+    <div class="feed-header">
+      <div class="feed-dot"></div>
+      <div class="feed-title">WHALE_ALERTS // LIVE</div>
+    </div>
+    <div class="feed-items">
+      <div class="feed-item">
+        <div>
+          <div class="feed-symbol">$CHONKERS 🐋</div>
+          <div class="feed-whales">8 SPIRIT2.0 whales just bought</div>
+        </div>
+        <div class="feed-right">
+          <div class="feed-change">+77.2%</div>
+          <div class="feed-mcap">MCap $264k</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div>
+          <div class="feed-symbol">$Apple 🐋</div>
+          <div class="feed-whales">5 SPIRIT2.0 whales just bought</div>
+        </div>
+        <div class="feed-right">
+          <div class="feed-change">+102.0%</div>
+          <div class="feed-mcap">MCap $294k</div>
+        </div>
+      </div>
+      <div class="feed-item feed-blur-overlay">
+        <div class="feed-blur">
+          <div class="feed-symbol">$?????? 🐋</div>
+          <div class="feed-whales">6 SPIRIT2.0 whales just bought</div>
+        </div>
+        <div class="feed-right feed-blur">
+          <div class="feed-change">+189.0%</div>
+          <div class="feed-mcap">MCap $88k</div>
+        </div>
+      </div>
+      <div class="feed-item feed-blur-overlay" style="animation-delay: 0.9s">
+        <div class="feed-blur">
+          <div class="feed-symbol">$?????? 🐋</div>
+          <div class="feed-whales">4 SPIRIT2.0 whales just bought</div>
+        </div>
+        <div class="feed-right feed-blur">
+          <div class="feed-change">+340.0%</div>
+          <div class="feed-mcap">MCap $42k</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-title">How it works</div>
+  <div class="section-sub" style="margin-bottom: 24px;">No BS. Just the signal.</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01 //</div>
+      <div class="how-icon">🐋</div>
+      <div class="how-title">Track 415 whales</div>
+      <div class="how-desc">Every wallet that bought SPIRIT2.0 is monitored 24/7 via Helius RPC in real time.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02 //</div>
+      <div class="how-icon">🎯</div>
+      <div class="how-title">Detect convergence</div>
+      <div class="how-desc">When 3+ whales stack the same token within 30 minutes — that's the signal. Consensus over noise.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03 //</div>
+      <div class="how-icon">⚡</div>
+      <div class="how-title">You get the alert</div>
+      <div class="how-desc">Instant Telegram notification with token, mcap, volume, and DexScreener link. You decide, you trade.</div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div style="text-align:center; margin-bottom: 24px;">
+    <div class="section-title">Simple pricing</div>
+    <div class="section-sub">One tier. Everything included.</div>
+  </div>
+  <div class="pricing-card">
+    <div class="price-amount">0.1 SOL</div>
+    <div class="price-period">per month · ~$15</div>
+    <ul class="price-features">
+      <li>All whale convergence signals</li>
+      <li>415 wallet tracking</li>
+      <li>Instant Telegram alerts</li>
+      <li>Token info + DexScreener links</li>
+      <li>New wallets added as we find them</li>
+    </ul>
+    <a href="https://t.me/ficlawcryptobot" target="_blank" class="btn-primary" style="width:100%; justify-content:center; font-size:1.05rem;">
+      Subscribe via Telegram 🦀
+    </a>
+    <div style="margin-top: 16px; font-size: 0.78rem; color: var(--muted);">Send 0.1 SOL → 9g8H9KhjyEA2qUSxd8LDHWBVo7sFgWYcR5qDiWExML9q<br>Then message the bot your tx signature</div>
+  </div>
+
+  <footer>
+    <div>Open Claw 🦀 — Solana Whale Intelligence</div>
+    <div style="margin-top: 8px; font-size: 0.72rem;">Not financial advice. Meme coins are high risk. Only trade what you can lose.</div>
+  </footer>
+</div>
+
+<script>
+const trades = [
+  { symbol: 'SPIRIT2.0', pnl: 183.4, mcap: 62523, vol: 436806, signal1h: 80.18, status: 'win', time: 'May 3, 22:09' },
+  { symbol: 'SPIRIT2.0', pnl: 129.0, mcap: 77374, vol: 407655, signal1h: 123, status: 'win', time: 'May 3, 22:04' },
+  { symbol: 'Staccana', pnl: 68.4, mcap: 113239, vol: 209847, signal1h: 256, status: 'win', time: 'May 3, 22:14' },
+  { symbol: 'trollhouse', pnl: 30.9, mcap: 89481, vol: 255772, signal1h: 156, status: 'win', time: 'May 4, 04:18' },
+  { symbol: 'kaluputics', pnl: -16.3, mcap: 104932, vol: 199846, signal1h: 203, status: 'loss', time: 'May 4, 04:18' },
+  { symbol: '1SHOT', pnl: -49.5, mcap: 267268, vol: 336242, signal1h: 614, status: 'loss', time: 'May 4, 04:18' },
+  { symbol: 'GLOO', pnl: -16.4, mcap: 210157, vol: 198888, signal1h: 142, status: 'loss', time: 'May 4, 05:38' },
+  { symbol: 'HOPE', pnl: -48.3, mcap: 106278, vol: 71771, signal1h: 203, status: 'loss', time: 'May 4, 05:38' },
+];
+
+let currentFilter = 'all';
+
+function filterTrades(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  renderTrades();
+}
+
+function renderTrades() {
+  const list = document.getElementById('tradesList');
+  const filtered = currentFilter === 'all' ? trades : trades.filter(t => t.status === currentFilter);
+  
+  list.innerHTML = filtered.map(t => `
+    <div class="trade-card ${t.status}">
+      <div class="trade-icon ${t.status}">${t.symbol.charAt(0)}</div>
+      <div class="trade-info">
+        <div class="symbol">$${t.symbol}</div>
+        <div class="meta">${t.time} · MCap $${(t.mcap/1000).toFixed(0)}k</div>
+      </div>
+      <div class="trade-signals">
+        <div class="signal-tag">+${t.signal1h}% 1h</div>
+        <div class="meta">Vol $${(t.vol/1000).toFixed(0)}k</div>
+      </div>
+      <div class="trade-pnl ${t.status}">${t.pnl > 0 ? '+' : ''}${t.pnl.toFixed(1)}%</div>
+    </div>
+  `).join('');
+}
+
+renderTrades();
+</script>
+</body>
+</html>
