@@ -18,459 +18,214 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Grotesk', sans-serif;
-    overflow-x: hidden;
-  }
-
-  /* Animated background */
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
   body::before {
     content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: 
-      radial-gradient(ellipse at 20% 50%, rgba(0,255,136,0.04) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.04) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(0,255,136,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(0,212,255,0.04) 0%, transparent 60%);
+    pointer-events: none; z-index: 0;
   }
-
   .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-  /* NAV */
   nav {
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 20px 0; display: flex; align-items: center; justify-content: space-between;
     border-bottom: 1px solid var(--border);
   }
-  .logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 1.1rem;
-    color: var(--claw);
-    text-shadow: 0 0 20px rgba(0,255,136,0.5);
-    letter-spacing: 2px;
-  }
+  .logo { font-family: 'Space Mono', monospace; font-size: 1.1rem; color: var(--claw); text-shadow: 0 0 20px rgba(0,255,136,0.5); letter-spacing: 2px; }
   .nav-pill {
-    background: rgba(0,255,136,0.08);
-    border: 1px solid rgba(0,255,136,0.2);
-    color: var(--claw);
-    padding: 8px 18px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
+    background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--claw);
+    padding: 8px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; text-decoration: none;
   }
-  .nav-pill:hover {
-    background: rgba(0,255,136,0.15);
-    box-shadow: 0 0 20px rgba(0,255,136,0.2);
-  }
+  .nav-pill:hover { background: rgba(0,255,136,0.15); box-shadow: 0 0 20px rgba(0,255,136,0.2); }
 
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 80px 0 60px;
-  }
+  .hero { text-align: center; padding: 80px 0 60px; }
   .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,255,136,0.06);
-    border: 1px solid rgba(0,255,136,0.2);
-    border-radius: 50px;
-    padding: 8px 20px;
-    font-size: 0.8rem;
-    color: var(--claw);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,255,136,0.06); border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 50px; padding: 8px 20px; font-size: 0.8rem; color: var(--claw);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 32px; font-weight: 600;
   }
-  .dot-live {
-    width: 7px; height: 7px;
-    background: var(--claw);
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-    box-shadow: 0 0 8px var(--claw);
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
+  .dot-live { width: 7px; height: 7px; background: var(--claw); border-radius: 50%; animation: pulse 1.5s infinite; box-shadow: 0 0 8px var(--claw); }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
 
-  h1 {
-    font-size: clamp(2.4rem, 6vw, 4rem);
-    font-weight: 700;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    letter-spacing: -1px;
-  }
-  h1 span {
-    background: linear-gradient(135deg, var(--claw), var(--claw2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  h1 { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 20px; letter-spacing: -1px; }
+  h1 span { background: linear-gradient(135deg, var(--claw), var(--claw2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-size: 1.15rem; color: #7a9ab5; max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
 
-  .hero-sub {
-    font-size: 1.15rem;
-    color: #7a9ab5;
-    max-width: 520px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-  }
-
-  .cta-group {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
   .btn-primary {
-    background: linear-gradient(135deg, var(--claw), #00c46a);
-    color: #000;
-    font-weight: 700;
-    padding: 16px 36px;
-    border-radius: 12px;
-    font-size: 1rem;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.2s;
-    letter-spacing: 0.5px;
-    box-shadow: 0 0 30px rgba(0,255,136,0.25);
+    background: linear-gradient(135deg, var(--claw), #00c46a); color: #000; font-weight: 700;
+    padding: 16px 36px; border-radius: 12px; font-size: 1rem; border: none; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.2s; letter-spacing: 0.5px; box-shadow: 0 0 30px rgba(0,255,136,0.25);
   }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 50px rgba(0,255,136,0.4);
-  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,255,136,0.4); }
   .btn-secondary {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-    padding: 16px 36px;
-    border-radius: 12px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.2s;
+    background: transparent; color: var(--text); border: 1px solid var(--border);
+    padding: 16px 36px; border-radius: 12px; font-size: 1rem; cursor: pointer;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s;
   }
   .btn-secondary:hover { border-color: var(--claw); color: var(--claw); }
 
-  /* STATS BAR */
   .stats-bar {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin: 60px 0;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin: 60px 0;
   }
-  .stat {
-    background: var(--card);
-    padding: 28px 24px;
-    text-align: center;
-  }
-  .stat-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--claw);
-    text-shadow: 0 0 20px rgba(0,255,136,0.3);
-    margin-bottom: 6px;
-  }
+  .stat { background: var(--card); padding: 28px 24px; text-align: center; }
+  .stat-num { font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--claw); text-shadow: 0 0 20px rgba(0,255,136,0.3); margin-bottom: 6px; }
   .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
 
-  /* TRADE REPLAY */
-  .section-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
+  .section-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
   .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 32px; }
 
-  .replay-container {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 60px;
-  }
-  .replay-header {
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .replay-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-  .filter-tabs {
-    display: flex;
-    gap: 8px;
-  }
+  .replay-container { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 60px; }
+  .replay-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .replay-title { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); letter-spacing: 1px; }
+  .filter-tabs { display: flex; gap: 8px; }
   .tab {
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    transition: all 0.2s;
+    padding: 6px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+    border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s;
   }
-  .tab.active {
-    background: rgba(0,255,136,0.1);
-    border-color: rgba(0,255,136,0.3);
-    color: var(--claw);
-  }
+  .tab.active { background: rgba(0,255,136,0.1); border-color: rgba(0,255,136,0.3); color: var(--claw); }
 
   .trades-list { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-
   .trade-card {
-    background: rgba(255,255,255,0.02);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    display: grid;
-    grid-template-columns: auto 1fr auto auto;
-    gap: 16px;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
+    background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 20px; display: grid; grid-template-columns: auto 1fr auto auto; gap: 16px;
+    align-items: center; transition: all 0.2s; position: relative; overflow: hidden;
   }
-  .trade-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-  }
+  .trade-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
   .trade-card.win::before { background: var(--claw); }
   .trade-card.loss::before { background: #ff4466; }
   .trade-card:hover { border-color: rgba(0,255,136,0.2); background: rgba(0,255,136,0.03); }
-
-  .trade-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: 'Space Mono', monospace;
-  }
+  .trade-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 700; font-family: 'Space Mono', monospace; }
   .trade-icon.win { background: rgba(0,255,136,0.1); color: var(--claw); }
   .trade-icon.loss { background: rgba(255,68,102,0.1); color: #ff4466; }
-
   .trade-info .symbol { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; }
   .trade-info .meta { font-size: 0.78rem; color: var(--muted); }
-
   .trade-signals { text-align: right; }
-  .signal-tag {
-    display: inline-block;
-    background: rgba(0,212,255,0.08);
-    border: 1px solid rgba(0,212,255,0.15);
-    color: var(--claw2);
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-size: 0.72rem;
-    font-family: 'Space Mono', monospace;
-    margin-bottom: 4px;
-  }
+  .signal-tag { display: inline-block; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); color: var(--claw2); padding: 3px 10px; border-radius: 6px; font-size: 0.72rem; font-family: 'Space Mono', monospace; margin-bottom: 4px; }
   .trade-signals .meta { font-size: 0.75rem; color: var(--muted); }
-
-  .trade-pnl {
-    font-family: 'Space Mono', monospace;
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-align: right;
-    min-width: 80px;
-  }
+  .trade-pnl { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; text-align: right; min-width: 80px; }
   .trade-pnl.win { color: var(--claw); text-shadow: 0 0 15px rgba(0,255,136,0.3); }
   .trade-pnl.loss { color: #ff4466; }
 
-  /* SPIRIT2.0 HIGHLIGHT */
   .spirit-banner {
     background: linear-gradient(135deg, rgba(0,255,136,0.06), rgba(0,212,255,0.06));
-    border: 1px solid rgba(0,255,136,0.2);
-    border-radius: 20px;
-    padding: 32px;
-    margin-bottom: 60px;
-    position: relative;
-    overflow: hidden;
+    border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 32px; margin-bottom: 60px;
+    position: relative; overflow: hidden;
   }
-  .spirit-banner::before {
-    content: '500x';
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Space Mono', monospace;
-    font-size: 6rem;
-    font-weight: 700;
-    color: rgba(0,255,136,0.04);
-    pointer-events: none;
-  }
+  .spirit-banner::before { content: '500x'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%); font-family: 'Space Mono', monospace; font-size: 6rem; font-weight: 700; color: rgba(0,255,136,0.04); pointer-events: none; }
   .spirit-grid { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
   .spirit-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
   .spirit-val { font-family: 'Space Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--claw); }
-  .spirit-badge {
-    background: var(--claw);
-    color: #000;
-    font-weight: 700;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-size: 1.2rem;
-    text-align: center;
-    font-family: 'Space Mono', monospace;
-  }
+  .spirit-badge { background: var(--claw); color: #000; font-weight: 700; padding: 12px 20px; border-radius: 12px; font-size: 1.2rem; text-align: center; font-family: 'Space Mono', monospace; }
 
-  /* HOW IT WORKS */
   .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 60px; }
-  .how-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-  }
-  .how-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
+  .how-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px; }
+  .how-num { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 2px; margin-bottom: 12px; }
   .how-icon { font-size: 1.8rem; margin-bottom: 12px; }
   .how-title { font-weight: 700; margin-bottom: 8px; }
   .how-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
 
-  /* PRICING */
-  .pricing-card {
-    background: var(--card);
-    border: 1px solid rgba(0,255,136,0.25);
-    border-radius: 24px;
-    padding: 40px;
-    text-align: center;
-    max-width: 420px;
-    margin: 0 auto 60px;
-    box-shadow: 0 0 60px rgba(0,255,136,0.06);
+  /* PAYMENT MODAL */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 100; align-items: center; justify-content: center; padding: 24px;
   }
-  .price-amount {
-    font-family: 'Space Mono', monospace;
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--claw);
-    margin-bottom: 4px;
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--card); border: 1px solid rgba(0,255,136,0.25); border-radius: 24px;
+    padding: 40px; max-width: 480px; width: 100%; position: relative;
+    box-shadow: 0 0 80px rgba(0,255,136,0.08);
+    animation: popIn 0.25s ease;
   }
-  .price-period { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
-  .price-features { list-style: none; margin-bottom: 32px; text-align: left; }
-  .price-features li {
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #a0c0d8;
+  @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+  .modal-close {
+    position: absolute; top: 16px; right: 20px; background: none; border: none;
+    color: var(--muted); font-size: 1.4rem; cursor: pointer; line-height: 1;
   }
-  .price-features li::before { content: '✓'; color: var(--claw); font-weight: 700; }
+  .modal-close:hover { color: var(--text); }
+  .modal h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+  .modal-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
 
-  /* WHALE FEED PREVIEW */
-  .feed-preview {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 60px;
+  .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step-num {
+    width: 28px; height: 28px; border-radius: 50%; background: rgba(0,255,136,0.1);
+    border: 1px solid rgba(0,255,136,0.3); color: var(--claw); font-size: 0.75rem;
+    font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;
   }
-  .feed-header {
-    background: #0d1e2d;
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid var(--border);
+  .step-content .step-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+  .step-content .step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  .wallet-box {
+    background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 16px; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   }
+  .wallet-addr { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--claw); word-break: break-all; }
+  .copy-btn {
+    background: rgba(0,255,136,0.1); border: 1px solid rgba(0,255,136,0.2); color: var(--claw);
+    padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; white-space: nowrap;
+    transition: all 0.2s; font-weight: 600;
+  }
+  .copy-btn:hover { background: rgba(0,255,136,0.2); }
+  .copy-btn.copied { background: rgba(0,255,136,0.2); color: #000; }
+
+  .modal-cta {
+    background: linear-gradient(135deg, var(--claw), #00c46a); color: #000; font-weight: 700;
+    padding: 14px; border-radius: 12px; font-size: 1rem; border: none; cursor: pointer;
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+    text-decoration: none; transition: all 0.2s; box-shadow: 0 0 30px rgba(0,255,136,0.2);
+  }
+  .modal-cta:hover { transform: translateY(-1px); box-shadow: 0 0 40px rgba(0,255,136,0.35); }
+
+  /* FEED PREVIEW */
+  .feed-preview { background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 60px; }
+  .feed-header { background: #0d1e2d; padding: 14px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); }
   .feed-dot { width: 10px; height: 10px; background: var(--claw); border-radius: 50%; animation: pulse 2s infinite; }
   .feed-title { font-size: 0.85rem; font-family: 'Space Mono', monospace; color: var(--claw); }
   .feed-items { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
   .feed-item {
-    background: rgba(0,255,136,0.03);
-    border: 1px solid rgba(0,255,136,0.08);
-    border-radius: 12px;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    animation: slideIn 0.4s ease forwards;
-    opacity: 0;
+    background: rgba(0,255,136,0.03); border: 1px solid rgba(0,255,136,0.08); border-radius: 12px;
+    padding: 14px 18px; display: flex; align-items: center; justify-content: space-between;
+    animation: slideIn 0.4s ease forwards; opacity: 0;
   }
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
   .feed-item:nth-child(1) { animation-delay: 0.1s; }
   .feed-item:nth-child(2) { animation-delay: 0.3s; }
   .feed-item:nth-child(3) { animation-delay: 0.5s; }
   .feed-item:nth-child(4) { animation-delay: 0.7s; }
-
   .feed-symbol { font-weight: 700; font-size: 0.95rem; }
   .feed-whales { font-size: 0.78rem; color: var(--muted); }
   .feed-right { text-align: right; }
   .feed-change { font-family: 'Space Mono', monospace; color: var(--claw); font-weight: 700; font-size: 0.9rem; }
   .feed-mcap { font-size: 0.75rem; color: var(--muted); }
-  .feed-blur {
-    filter: blur(5px);
-    user-select: none;
-    pointer-events: none;
-  }
-  .feed-blur-overlay {
-    position: relative;
-  }
+  .feed-blur { filter: blur(5px); user-select: none; pointer-events: none; }
+  .feed-blur-overlay { position: relative; }
   .feed-blur-overlay::after {
-    content: '🔒 Subscribe to unlock';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    color: var(--claw);
-    font-weight: 600;
-    background: rgba(5,10,14,0.7);
-    border-radius: 12px;
+    content: '🔒 Subscribe to unlock'; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; color: var(--claw); font-weight: 600;
+    background: rgba(5,10,14,0.7); border-radius: 12px;
   }
 
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 32px 0;
-    text-align: center;
-    color: var(--muted);
-    font-size: 0.8rem;
+  /* PRICING */
+  .pricing-card {
+    background: var(--card); border: 1px solid rgba(0,255,136,0.25); border-radius: 24px;
+    padding: 40px; text-align: center; max-width: 420px; margin: 0 auto 60px;
+    box-shadow: 0 0 60px rgba(0,255,136,0.06);
   }
+  .price-amount { font-family: 'Space Mono', monospace; font-size: 3rem; font-weight: 700; color: var(--claw); margin-bottom: 4px; }
+  .price-period { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+  .price-features { list-style: none; margin-bottom: 32px; text-align: left; }
+  .price-features li { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 0.9rem; display: flex; align-items: center; gap: 12px; color: #a0c0d8; }
+  .price-features li::before { content: '✓'; color: var(--claw); font-weight: 700; }
 
-  /* RESPONSIVE */
+  footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--muted); font-size: 0.8rem; }
+
   @media (max-width: 640px) {
     .stats-bar { grid-template-columns: 1fr; }
     .how-grid { grid-template-columns: 1fr; }
@@ -482,14 +237,50 @@
 </head>
 <body>
 
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Get Access 🦀</h2>
+    <p class="modal-sub">Pay once, get access instantly. No middleman.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Send 0.1 SOL to this wallet</div>
+          <div class="wallet-box">
+            <div class="wallet-addr">9g8H9KhjyEA2qUSxd8LDHWBVo7sFgWYcR5qDiWExML9q</div>
+            <button class="copy-btn" onclick="copyWallet(this)">Copy</button>
+          </div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Message the bot your tx signature</div>
+          <div class="step-desc">Open @ficlawcryptobot on Telegram and paste your transaction hash. Access activated instantly.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Start receiving signals</div>
+          <div class="step-desc">Whale alerts drop straight to your Telegram the moment convergence is detected.</div>
+        </div>
+      </div>
+    </div>
+    <a href="https://t.me/ficlawcryptobot" target="_blank" class="modal-cta">
+      Open @ficlawcryptobot on Telegram →
+    </a>
+  </div>
+</div>
+
 <div class="container">
-  <!-- NAV -->
   <nav>
     <div class="logo">OPEN CLAW 🦀</div>
-    <a href="https://t.me/ficlawcryptobot" target="_blank" class="nav-pill">Get Access →</a>
+    <button class="nav-pill" onclick="openModal()">Get Access →</button>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-badge">
       <div class="dot-live"></div>
@@ -498,148 +289,90 @@
     <h1>The bot that caught<br><span>SPIRIT2.0</span> before<br>the 500x</h1>
     <p class="hero-sub">We monitor 415 proven Solana whale wallets in real time. When 3+ whales stack the same token — you get the alert before the pump.</p>
     <div class="cta-group">
-      <a href="https://t.me/ficlawcryptobot" target="_blank" class="btn-primary">
-        🦀 Get Whale Signals — 0.1 SOL/mo
-      </a>
+      <button class="btn-primary" onclick="openModal()">🦀 Get Whale Signals — 0.1 SOL/mo</button>
       <a href="#trades" class="btn-secondary">See the trades ↓</a>
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="stats-bar">
-    <div class="stat">
-      <div class="stat-num">415</div>
-      <div class="stat-label">Whale Wallets Tracked</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">500x</div>
-      <div class="stat-label">Best Signal (SPIRIT2.0)</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">5min</div>
-      <div class="stat-label">Scan Interval</div>
-    </div>
+    <div class="stat"><div class="stat-num">415</div><div class="stat-label">Whale Wallets Tracked</div></div>
+    <div class="stat"><div class="stat-num">500x</div><div class="stat-label">Best Signal (SPIRIT2.0)</div></div>
+    <div class="stat"><div class="stat-num">5min</div><div class="stat-label">Scan Interval</div></div>
   </div>
 
-  <!-- SPIRIT2.0 HIGHLIGHT -->
   <div class="spirit-banner">
     <div class="section-title">The trade that started it all</div>
     <div class="section-sub" style="margin-bottom: 20px;">Bot entered SPIRIT2.0 at $50k mcap. Confirmed on-chain.</div>
     <div class="spirit-grid">
       <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 20px;">
-        <div>
-          <div class="spirit-label">Entry MCap</div>
-          <div class="spirit-val">$50k</div>
-        </div>
-        <div>
-          <div class="spirit-label">1h Signal</div>
-          <div class="spirit-val">+80%</div>
-        </div>
-        <div>
-          <div class="spirit-label">Peak Gain</div>
-          <div class="spirit-val">+500x</div>
-        </div>
+        <div><div class="spirit-label">Entry MCap</div><div class="spirit-val">$50k</div></div>
+        <div><div class="spirit-label">1h Signal</div><div class="spirit-val">+80%</div></div>
+        <div><div class="spirit-label">Peak Gain</div><div class="spirit-val">+500x</div></div>
       </div>
       <div class="spirit-badge">500x 🚀</div>
     </div>
   </div>
 
-  <!-- TRADE REPLAY -->
   <div id="trades">
     <div class="section-title">Live trade log</div>
     <div class="section-sub">Real trades executed on-chain. No simulations.</div>
   </div>
-
   <div class="replay-container">
     <div class="replay-header">
       <div class="replay-title">// TRADE_HISTORY.LOG</div>
       <div class="filter-tabs">
-        <button class="tab active" onclick="filterTrades('all')">All</button>
-        <button class="tab" onclick="filterTrades('win')">Winners</button>
-        <button class="tab" onclick="filterTrades('loss')">Losers</button>
+        <button class="tab active" onclick="filterTrades('all', event)">All</button>
+        <button class="tab" onclick="filterTrades('win', event)">Winners</button>
+        <button class="tab" onclick="filterTrades('loss', event)">Losers</button>
       </div>
     </div>
     <div class="trades-list" id="tradesList"></div>
   </div>
 
-  <!-- WHALE FEED PREVIEW -->
   <div class="section-title">Live whale feed — preview</div>
   <div class="section-sub" style="margin-bottom: 24px;">Right now, whales are moving into these tokens. Subscribers get this in real time.</div>
-
   <div class="feed-preview">
-    <div class="feed-header">
-      <div class="feed-dot"></div>
-      <div class="feed-title">WHALE_ALERTS // LIVE</div>
-    </div>
+    <div class="feed-header"><div class="feed-dot"></div><div class="feed-title">WHALE_ALERTS // LIVE</div></div>
     <div class="feed-items">
       <div class="feed-item">
-        <div>
-          <div class="feed-symbol">$CHONKERS 🐋</div>
-          <div class="feed-whales">8 SPIRIT2.0 whales just bought</div>
-        </div>
-        <div class="feed-right">
-          <div class="feed-change">+77.2%</div>
-          <div class="feed-mcap">MCap $264k</div>
-        </div>
+        <div><div class="feed-symbol">$CHONKERS 🐋</div><div class="feed-whales">8 SPIRIT2.0 whales just bought</div></div>
+        <div class="feed-right"><div class="feed-change">+77.2%</div><div class="feed-mcap">MCap $264k</div></div>
       </div>
       <div class="feed-item">
-        <div>
-          <div class="feed-symbol">$Apple 🐋</div>
-          <div class="feed-whales">5 SPIRIT2.0 whales just bought</div>
-        </div>
-        <div class="feed-right">
-          <div class="feed-change">+102.0%</div>
-          <div class="feed-mcap">MCap $294k</div>
-        </div>
+        <div><div class="feed-symbol">$Apple 🐋</div><div class="feed-whales">5 SPIRIT2.0 whales just bought</div></div>
+        <div class="feed-right"><div class="feed-change">+102.0%</div><div class="feed-mcap">MCap $294k</div></div>
       </div>
       <div class="feed-item feed-blur-overlay">
-        <div class="feed-blur">
-          <div class="feed-symbol">$?????? 🐋</div>
-          <div class="feed-whales">6 SPIRIT2.0 whales just bought</div>
-        </div>
-        <div class="feed-right feed-blur">
-          <div class="feed-change">+189.0%</div>
-          <div class="feed-mcap">MCap $88k</div>
-        </div>
+        <div class="feed-blur"><div class="feed-symbol">$?????? 🐋</div><div class="feed-whales">6 whales just bought</div></div>
+        <div class="feed-right feed-blur"><div class="feed-change">+189.0%</div><div class="feed-mcap">MCap $88k</div></div>
       </div>
-      <div class="feed-item feed-blur-overlay" style="animation-delay: 0.9s">
-        <div class="feed-blur">
-          <div class="feed-symbol">$?????? 🐋</div>
-          <div class="feed-whales">4 SPIRIT2.0 whales just bought</div>
-        </div>
-        <div class="feed-right feed-blur">
-          <div class="feed-change">+340.0%</div>
-          <div class="feed-mcap">MCap $42k</div>
-        </div>
+      <div class="feed-item feed-blur-overlay">
+        <div class="feed-blur"><div class="feed-symbol">$?????? 🐋</div><div class="feed-whales">4 whales just bought</div></div>
+        <div class="feed-right feed-blur"><div class="feed-change">+340.0%</div><div class="feed-mcap">MCap $42k</div></div>
       </div>
     </div>
   </div>
 
-  <!-- HOW IT WORKS -->
   <div class="section-title">How it works</div>
   <div class="section-sub" style="margin-bottom: 24px;">No BS. Just the signal.</div>
   <div class="how-grid">
     <div class="how-card">
-      <div class="how-num">01 //</div>
-      <div class="how-icon">🐋</div>
+      <div class="how-num">01 //</div><div class="how-icon">🐋</div>
       <div class="how-title">Track 415 whales</div>
       <div class="how-desc">Every wallet that bought SPIRIT2.0 is monitored 24/7 via Helius RPC in real time.</div>
     </div>
     <div class="how-card">
-      <div class="how-num">02 //</div>
-      <div class="how-icon">🎯</div>
+      <div class="how-num">02 //</div><div class="how-icon">🎯</div>
       <div class="how-title">Detect convergence</div>
       <div class="how-desc">When 3+ whales stack the same token within 30 minutes — that's the signal. Consensus over noise.</div>
     </div>
     <div class="how-card">
-      <div class="how-num">03 //</div>
-      <div class="how-icon">⚡</div>
+      <div class="how-num">03 //</div><div class="how-icon">⚡</div>
       <div class="how-title">You get the alert</div>
       <div class="how-desc">Instant Telegram notification with token, mcap, volume, and DexScreener link. You decide, you trade.</div>
     </div>
   </div>
 
-  <!-- PRICING -->
   <div style="text-align:center; margin-bottom: 24px;">
     <div class="section-title">Simple pricing</div>
     <div class="section-sub">One tier. Everything included.</div>
@@ -654,10 +387,7 @@
       <li>Token info + DexScreener links</li>
       <li>New wallets added as we find them</li>
     </ul>
-    <a href="https://t.me/ficlawcryptobot" target="_blank" class="btn-primary" style="width:100%; justify-content:center; font-size:1.05rem;">
-      Subscribe via Telegram 🦀
-    </a>
-    <div style="margin-top: 16px; font-size: 0.78rem; color: var(--muted);">Send 0.1 SOL → 9g8H9KhjyEA2qUSxd8LDHWBVo7sFgWYcR5qDiWExML9q<br>Then message the bot your tx signature</div>
+    <button class="modal-cta" onclick="openModal()">Get Access 🦀</button>
   </div>
 
   <footer>
@@ -680,17 +410,16 @@ const trades = [
 
 let currentFilter = 'all';
 
-function filterTrades(filter) {
+function filterTrades(filter, e) {
   currentFilter = filter;
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+  if (e && e.target) e.target.classList.add('active');
   renderTrades();
 }
 
 function renderTrades() {
   const list = document.getElementById('tradesList');
   const filtered = currentFilter === 'all' ? trades : trades.filter(t => t.status === currentFilter);
-  
   list.innerHTML = filtered.map(t => `
     <div class="trade-card ${t.status}">
       <div class="trade-icon ${t.status}">${t.symbol.charAt(0)}</div>
@@ -705,6 +434,19 @@ function renderTrades() {
       <div class="trade-pnl ${t.status}">${t.pnl > 0 ? '+' : ''}${t.pnl.toFixed(1)}%</div>
     </div>
   `).join('');
+}
+
+function openModal() { document.getElementById('payModal').classList.add('open'); }
+function closeModal() { document.getElementById('payModal').classList.remove('open'); }
+document.getElementById('payModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function copyWallet(btn) {
+  navigator.clipboard.writeText('9g8H9KhjyEA2qUSxd8LDHWBVo7sFgWYcR5qDiWExML9q');
+  btn.textContent = '✓ Copied';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
 }
 
 renderTrades();
